@@ -1,3 +1,3 @@
-# Huang Jiajia Portfolio
+# HJJ Product Portfolio
 
-Static portfolio site published with GitHub Pages.
+A product, spatial intelligence, and visual systems portfolio by Huang Jiajia.
