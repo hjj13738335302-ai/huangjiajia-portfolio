@@ -44,6 +44,30 @@ const ugcReels = [
   },
 ];
 
+const beltImages = [
+  'belt-01-enclosed-living.webp',
+  'belt-02-enclosed-white.webp',
+  'belt-03-cat-exit.webp',
+  'belt-04-enclosed-cat.webp',
+  'belt-05-open-tray.webp',
+  'belt-06-laundry-scene.webp',
+  'belt-07-entry-pov.webp',
+  'belt-08-covered-pair.webp',
+  'belt-09-covered-living.webp',
+  'belt-10-top-window.webp',
+];
+
+const beltRows = [
+  [
+    beltImages[0], beltImages[3], beltImages[5], beltImages[8], beltImages[1],
+    beltImages[2], beltImages[7], beltImages[4], beltImages[6], beltImages[9],
+  ],
+  [
+    beltImages[4], beltImages[6], beltImages[9], beltImages[7], beltImages[2],
+    beltImages[1], beltImages[8], beltImages[0], beltImages[5], beltImages[3],
+  ],
+];
+
 const waitFor = (selector, timeout = 8000) => new Promise((resolve, reject) => {
   const ready = document.querySelector(selector);
   if (ready) {
@@ -138,13 +162,30 @@ const bindReelControls = (root) => {
   });
 };
 
+const updateHero = () => {
+  const root = document.querySelector('.hero');
+  if (!root) return;
+
+  const eyebrow = root.querySelector('.hero-eyebrow');
+  if (eyebrow) {
+    const icon = eyebrow.querySelector('svg');
+    if (icon) eyebrow.replaceChildren(icon, document.createTextNode(' AIGC / 产品 / 视觉叙事'));
+    else eyebrow.textContent = 'AIGC / 产品 / 视觉叙事';
+  }
+
+  setText(root, '.hero-copy p', '我以 AIGC 为核心，把产品卖点转化为能被看见、理解与记住的视觉内容。');
+};
+
 const updateImageBelt = () => {
-  const posters = [...tvcReels, ...ugcReels].map((item) => item.poster);
-  document.querySelectorAll('.belt img').forEach((image, index) => {
-    image.src = posters[index % posters.length];
-    image.alt = '';
+  document.querySelectorAll('.belt-track').forEach((track, rowIndex) => {
+    const row = beltRows[rowIndex] ?? beltImages;
+    track.querySelectorAll('img').forEach((image, index) => {
+      image.src = row[index % row.length];
+      image.alt = '';
+      image.decoding = 'async';
+    });
   });
-  document.querySelector('.belt')?.setAttribute('aria-label', 'AIGC TVC and UGC key frames');
+  document.querySelector('.belt')?.setAttribute('aria-label', 'AIGC product visual key frames');
 };
 
 const updatePractice = () => {
@@ -256,6 +297,7 @@ const updateFooter = () => {
 
 const applyPortfolio = async () => {
   await waitFor('.products');
+  updateHero();
   updateImageBelt();
   updatePractice();
   updateCapabilities();

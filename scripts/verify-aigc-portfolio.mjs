@@ -17,6 +17,22 @@ const ugcVideos = [
 
 const posters = [...tvcVideos, ...ugcVideos].map((name) => name.replace(/\.mp4$/, '.webp'));
 const requiredAssets = [...tvcVideos, ...ugcVideos, ...posters];
+const beltImages = [
+  'belt-01-enclosed-living.webp',
+  'belt-02-enclosed-white.webp',
+  'belt-03-cat-exit.webp',
+  'belt-04-enclosed-cat.webp',
+  'belt-05-open-tray.webp',
+  'belt-06-laundry-scene.webp',
+  'belt-07-entry-pov.webp',
+  'belt-08-covered-pair.webp',
+  'belt-09-covered-living.webp',
+  'belt-10-top-window.webp',
+];
+const heroCopy = [
+  'AIGC / 产品 / 视觉叙事',
+  '我以 AIGC 为核心，把产品卖点转化为能被看见、理解与记住的视觉内容。',
+];
 const failures = [];
 
 function test(name, fn) {
@@ -50,6 +66,23 @@ test('content layer declares four UGC videos', () => {
   expect(existsSync('aigc-portfolio-content.js'), 'aigc-portfolio-content.js is missing');
   const source = readFileSync('aigc-portfolio-content.js', 'utf8');
   for (const file of ugcVideos) expect(source.includes(file), `${file} is not declared`);
+});
+
+test('content layer declares the approved AIGC hero copy', () => {
+  const source = readFileSync('aigc-portfolio-content.js', 'utf8');
+  for (const copy of heroCopy) expect(source.includes(copy), `hero copy is missing: ${copy}`);
+});
+
+test('content layer declares all ten image-belt artworks', () => {
+  const source = readFileSync('aigc-portfolio-content.js', 'utf8');
+  for (const file of beltImages) expect(source.includes(file), `${file} is not declared`);
+});
+
+test('all ten image-belt artworks exist', () => {
+  for (const file of beltImages) {
+    expect(existsSync(file), `${file} is missing`);
+    expect(statSync(file).size > 8 * 1024, `${file} is unexpectedly small`);
+  }
 });
 
 test('all eight videos and posters exist', () => {
