@@ -98,7 +98,11 @@ const setText = (root, selector, value) => {
 const setSectionTitle = (root, title, accent, english) => {
   const node = root?.querySelector('h2');
   if (!node) return;
-  node.innerHTML = `${title}<br><i>${accent}</i><small lang="en">${english}</small>`;
+  node.innerHTML = `
+    <span class="section-title__line">${title}</span>
+    <i class="section-title__line section-title__line--accent">${accent}</i>
+    <small lang="en">${english}</small>
+  `;
 };
 
 const makeReelTile = (reel, kind) => `
@@ -253,7 +257,7 @@ const updateAbout = () => {
   });
 
   const image = root.querySelector('.about-me__image img');
-  if (image) Object.assign(image, { src: tvcReels[3].poster, alt: 'Stainless steel product TVC key frame' });
+  if (image) Object.assign(image, { src: 'about-cat-interview.webp', alt: '橘猫与不锈钢猫砂盆的 AIGC 采访场景' });
   setText(root, '.about-me__image > span', 'AIGC VISUAL CREATOR / 2026');
 };
 
@@ -264,7 +268,11 @@ const updateProducts = () => {
   root.innerHTML = `
     <span id="spatial" class="anchor-sentinel" aria-hidden="true"></span>
     <p class="section-label"><span class="section-dot" aria-hidden="true"></span> SELECTED WORK / 精选作品</p>
-    <h2>为品牌，<br><i>制造值得停留的一秒。</i><small lang="en">CREATING THE SECOND THAT MAKES PEOPLE STOP.</small></h2>
+    <h2>
+      <span class="section-title__line">为品牌，</span>
+      <i class="section-title__line section-title__line--accent">制造值得停留的一秒。</i>
+      <small lang="en">CREATING THE SECOND THAT MAKES PEOPLE STOP.</small>
+    </h2>
     <div class="reel-stack">
       <section class="reel-collection reel-collection--tvc" aria-labelledby="tvc-title">
         <header class="reel-collection__header">

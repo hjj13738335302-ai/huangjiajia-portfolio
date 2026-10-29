@@ -39,6 +39,23 @@
   opacity: .56;
 }
 
+.practice h2,
+.capabilities h2,
+.products h2 {
+  font-size: clamp(3.1rem, 5.2vw, 5.8rem);
+}
+
+.about-me h2 {
+  font-size: clamp(2.8rem, 4vw, 4.6rem);
+}
+
+.section-title__line {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
 .capability p small { font-size: .72rem; }
 .products { margin-top: -3.3rem; padding-bottom: 9rem; }
 .products h2 { max-width: 15ch; margin-bottom: 5.5rem; }
@@ -276,6 +293,14 @@
 }
 
 @media (max-width: 760px) {
+  .practice h2,
+  .capabilities h2,
+  .about-me h2,
+  .products h2 {
+    font-size: clamp(1.45rem, 7.2vw, 3rem);
+    line-height: 1.07;
+  }
+
   .practice h2 small,
   .capabilities h2 small,
   .about-me h2 small,

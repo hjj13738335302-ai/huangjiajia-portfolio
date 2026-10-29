@@ -29,6 +29,7 @@ const beltImages = [
   'belt-09-covered-living.webp',
   'belt-10-top-window.webp',
 ];
+const aboutImage = 'about-cat-interview.webp';
 const heroCopy = [
   'AIGC / 产品 / 视觉叙事',
   '我以 AIGC 为核心，把产品卖点转化为能被看见、理解与记住的视觉内容。',
@@ -83,6 +84,21 @@ test('all ten image-belt artworks exist', () => {
     expect(existsSync(file), `${file} is missing`);
     expect(statSync(file).size > 8 * 1024, `${file} is unexpectedly small`);
   }
+});
+
+test('the four showcase headings use an explicit two-line title structure', () => {
+  const source = readFileSync('aigc-portfolio-content.js', 'utf8');
+  const styles = readFileSync('aigc-portfolio-overrides.css', 'utf8');
+  expect(source.includes('section-title__line'), 'two-line title markup is not declared');
+  expect(source.includes('section-title__line--accent'), 'accent title line is not declared');
+  expect(styles.includes('.section-title__line'), 'two-line title styles are missing');
+});
+
+test('the about section declares the supplied interview artwork', () => {
+  const source = readFileSync('aigc-portfolio-content.js', 'utf8');
+  expect(source.includes(aboutImage), `${aboutImage} is not declared`);
+  expect(existsSync(aboutImage), `${aboutImage} is missing`);
+  expect(statSync(aboutImage).size > 8 * 1024, `${aboutImage} is unexpectedly small`);
 });
 
 test('all eight videos and posters exist', () => {
